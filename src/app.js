@@ -1,6 +1,8 @@
 var UI = require('ui');
 var ajax = require('ajax');
 var Vector2 = require('vector2');
+var Accel = require('ui/accel');
+
 
 var splashWindow = new UI.Window();
 
@@ -28,7 +30,7 @@ ajax(
     type: 'json',
     headers: {
       'X-Mashape-Key': 'HpeEz7yI8JmshzdrtGpshHhxhofZp1y9XGxjsnyTLuNIof9bi1',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
     }
   },
   
@@ -43,7 +45,7 @@ ajax(
   
         // Add to menu items array
         items.push({
-          title: title,
+          title: 'Day ' + title,
           subtitle: subtitle
         });
       }
@@ -55,25 +57,37 @@ ajax(
     // Create an array of Menu items
     var menuItems = parseFeed(data, 3);
     
-    // Check the items are extracted OK
-    for(var i = 0; i < menuItems.length; i++) {
-      console.log(menuItems[i].title + ' | ' + menuItems[i].subtitle);
-    }
-    
     var resultsMenu = new UI.Menu({
       sections: [{
         title: 'Current Forecast',
         items: menuItems
       }]
     });
+    
+    resultsMenu.on('select', function(e) {
+      // Get that forecast
+      var forecast = data.periods[e.itemIndex];
+
+      // Assemble body string
+      var content = forecast.combined.avgCounter;
+      
+      // Create the Card for detailed view
+      var detailCard = new UI.Card({
+        title:'Details',
+        subtitle:e.item.subtitle,
+        body: content
+      });
+      detailCard.show();
+    });
 
     // Show the Menu, hide the splash
     resultsMenu.show();
     splashWindow.hide();
-        
   },
   
   function(error) {
     console.log('Failed to grab the weather data ' + error);
      }
 );
+
+Accel.init();
