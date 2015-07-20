@@ -3,8 +3,8 @@
     "capabilities": [
         ""
     ],
-    "companyName": "henry@osadzinski.co.uk",
-    "longName": "weatherTest",
+    "companyName": "@hen_dubz",
+    "longName": "Sneezy - the Pebble pollen counter",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -32,7 +32,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "weatherTest",
+    "shortName": "Sneezy",
     "uuid": "475552db-6ba0-4e39-bd43-292d215ca65b",
     "versionCode": 1,
     "versionLabel": "1.0",
